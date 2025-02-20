@@ -1,4 +1,6 @@
-function generateOrderData(formData) {
+import { validateForm, validateOrder } from './formValidator.js';
+
+export function generateOrderData(formData) {
     let orderData = `Название торговой точки: ${formData.get('storeName')}\n`;
     orderData += `Фамилия сотрудника: ${formData.get('lastName')}\n`;
     orderData += `Дата: ${new Date().toISOString().slice(0, 10)}\n`;
@@ -9,7 +11,7 @@ function generateOrderData(formData) {
     const filteredItems = [];
 
     for (let i = 0; i < itemNames.length; i++) {
-        if (quantities[i] && parseInt(quantities[i]) > 0) {
+        if (quantities[i] && parseInt(quantities[i], 10) > 0) {
             filteredItems.push(`${itemNames[i]} - ${quantities[i]}`);
         }
     }
@@ -26,12 +28,21 @@ function generateOrderData(formData) {
     return orderData;
 }
 
-function submitForm() {
-    if (!validateForm() || !validateOrder(new FormData(document.getElementById('orderForm')))) return;
-
+export function submitForm() {
     const form = document.getElementById('orderForm');
     const formData = new FormData(form);
+
+    if (!validateForm() || !validateOrder(formData)) {
+        alert("Ошибка: Пожалуйста, заполните форму корректно.");
+        return;
+    }
+
     const orderData = generateOrderData(formData);
+
+    if (!orderData.includes("Выпечка:")) {
+        alert("Ошибка: Вы не выбрали ни одного товара.");
+        return;
+    }
 
     const storeName = formData.get('storeName').replace(/\s+/g, '_');
     const date = new Date().toISOString().slice(0, 10);
@@ -39,6 +50,7 @@ function submitForm() {
 
     const blob = new Blob([orderData], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement('a');
     a.href = url;
     a.download = fileName;
@@ -46,10 +58,10 @@ function submitForm() {
     URL.revokeObjectURL(url);
 
     clearFormData();
+    alert("Заявка успешно сохранена!");
 }
 
 function clearFormData() {
-    localStorage.removeItem('formData');
     document.getElementById('storeName').value = '';
     document.getElementById('lastName').value = '';
     document.getElementById('itemsContainer').innerHTML = '';
