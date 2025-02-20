@@ -1,15 +1,8 @@
 import { validateForm, validateOrder } from './formValidator.js';
 import { generateOrderData, clearFormData } from './orderExporter.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const whatsappButton = document.querySelector('.green-button');
-
-    if (whatsappButton) {
-        whatsappButton.addEventListener('click', shareTextViaWhatsApp);
-    }
-});
-
-function shareTextViaWhatsApp() {
+// Экспорт функции для отправки данных в WhatsApp
+export function shareTextViaWhatsApp() {
     console.log("Кнопка 'Поделиться в WhatsApp' нажата");
 
     const form = document.getElementById('orderForm');
@@ -29,18 +22,30 @@ function shareTextViaWhatsApp() {
     showSuccessMessage();
 }
 
+// Вывод ошибок
 function showError(message) {
     const errorContainer = document.getElementById('orderError');
     errorContainer.textContent = message;
     errorContainer.style.display = 'block';
 }
 
+// Сброс ошибок
 function clearError() {
     const errorContainer = document.getElementById('orderError');
     errorContainer.style.display = 'none';
 }
 
+// Вывод успешного сообщения
 function showSuccessMessage() {
     alert("Данные успешно отправлены в WhatsApp!");
     clearError();
 }
+
+// Добавление обработчика события для кнопки
+document.addEventListener('DOMContentLoaded', () => {
+    const whatsappButton = document.querySelector('.green-button');
+
+    if (whatsappButton) {
+        whatsappButton.addEventListener('click', shareTextViaWhatsApp);
+    }
+});
