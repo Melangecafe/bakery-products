@@ -5,6 +5,7 @@ export let categories = {};
 function saveFormData() {
     const storeName = document.getElementById('storeName').value;
     const lastName = document.getElementById('lastName').value;
+
     if (storeName || lastName) {
         localStorage.setItem('formData', JSON.stringify({ storeName, lastName }));
     } else {
@@ -12,6 +13,20 @@ function saveFormData() {
     }
 }
 
+// Восстановление данных из localStorage
+function loadFormData() {
+    const storedData = JSON.parse(localStorage.getItem('formData'));
+    if (storedData) {
+        document.getElementById('storeName').value = storedData.storeName;
+        document.getElementById('lastName').value = storedData.lastName;
+
+        if (storedData.storeName) {
+            renderItems(storedData.storeName); // Рендерим товары для сохраненной точки
+        }
+    }
+}
+
+// Загрузка начальных данных
 export async function loadInitialData() {
     try {
         const [storesResponse, categoriesResponse] = await Promise.all([
@@ -37,13 +52,14 @@ export async function loadInitialData() {
             storeSelect.appendChild(option);
         });
 
-        loadFormData();
+        loadFormData(); // Восстанавливаем данные из localStorage
     } catch (error) {
         console.error('Ошибка при загрузке данных:', error.message);
         alert("Не удалось загрузить данные. Проверьте файлы stores.json и categories.json.");
     }
 }
 
+// Рендеринг категорий для выбранного магазина
 export function renderItems(storeName) {
     const itemsContainer = document.getElementById('itemsContainer');
 
@@ -73,27 +89,18 @@ export function renderItems(storeName) {
     });
 }
 
-function loadFormData() {
-    const storedData = JSON.parse(localStorage.getItem('formData'));
-    if (storedData) {
-        document.getElementById('storeName').value = storedData.storeName;
-        document.getElementById('lastName').value = storedData.lastName;
-
-        if (storedData.storeName) {
-            renderItems(storedData.storeName);
-        }
-    }
-}
-
+// Обработчик изменения торговой точки
 document.getElementById('storeName').addEventListener('change', function () {
     const selectedStore = this.value;
+
     if (selectedStore) {
-        renderItems(selectedStore);
-        saveFormData();
+        renderItems(selectedStore); // Рендерим товары для выбранной точки
+        saveFormData(); // Сохраняем выбранные данные
     } else {
-        document.getElementById('itemsContainer').innerHTML = '';
-        saveFormData();
+        document.getElementById('itemsContainer').innerHTML = ''; // Очищаем контейнер, если ничего не выбрано
+        saveFormData(); // Очищаем данные в localStorage
     }
 });
 
+// Инициализация страницы
 document.addEventListener('DOMContentLoaded', loadInitialData);
