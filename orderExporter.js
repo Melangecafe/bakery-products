@@ -1,5 +1,6 @@
 import { validateForm, validateOrder } from './formValidator.js';
 
+// Генерация данных заказа
 export function generateOrderData(formData) {
     let orderData = `Название торговой точки: ${formData.get('storeName')}\n`;
     orderData += `Фамилия сотрудника: ${formData.get('lastName')}\n`;
@@ -28,6 +29,7 @@ export function generateOrderData(formData) {
     return orderData;
 }
 
+// Сохранение заявки
 export function submitForm() {
     const form = document.getElementById('orderForm');
     const formData = new FormData(form);
@@ -61,7 +63,8 @@ export function submitForm() {
     alert("Заявка успешно сохранена!");
 }
 
-function clearFormData() {
+// Очистка формы
+export function clearFormData() {
     document.getElementById('storeName').value = '';
     document.getElementById('lastName').value = '';
     document.getElementById('itemsContainer').innerHTML = '';
