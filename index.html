@@ -19,6 +19,7 @@
         <!-- Фамилия сотрудника -->
         <label for="lastName">Фамилия сотрудника:</label>
         <input type="text" id="lastName" name="lastName" required>
+        <div class="error-message" id="lastNameError" style="display:none;">Введите фамилию сотрудника.</div>
 
         <!-- Загрузка файла ceh.txt -->
         <label for="uploadFile">Загрузить новый список товаров (файл ceh.txt):</label>
@@ -26,6 +27,9 @@
         <button type="button" id="loadButton" class="orange-button" style="display: none;">
             Загрузить на торговую точку
         </button>
+
+        <!-- Общий блок для ошибок -->
+        <div id="orderError" class="error-message" style="display:none;">Произошла ошибка.</div>
 
         <!-- Контейнер для товаров -->
         <div id="itemsContainer">
@@ -35,12 +39,12 @@
         <!-- Кнопки действия -->
         <div class="share-buttons">
             <button type="button" onclick="orderExporter.submitForm()" class="orange-button">Сохранить заявку</button>
-            <button type="button" class="green-button">Поделиться в WhatsApp</button>
+            <button type="button" onclick="whatsappSender.shareTextViaWhatsApp()" class="green-button">Поделиться в WhatsApp</button>
         </div>
     </form>
 
     <!-- Подключение скриптов -->
-    <!--<script type="module" src="formValidator.js"></script> -->
+    <script type="module" src="formValidator.js"></script>
     <script type="module" src="fileHandler.js"></script>
     <script type="module" src="orderExporter.js"></script>
     <script type="module" src="whatsappSender.js"></script>
