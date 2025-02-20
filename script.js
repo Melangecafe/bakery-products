@@ -1,21 +1,34 @@
-// Экспорт переменных для использования в других модулях
-export let stores = {}; // Общая переменная для хранения данных о магазинах
+export let stores = {};
 export let categories = {};
 
-// Загрузка начальных данных
+// Сохранение данных формы в localStorage
+function saveFormData() {
+    const storeName = document.getElementById('storeName').value;
+    const lastName = document.getElementById('lastName').value;
+    if (storeName || lastName) {
+        localStorage.setItem('formData', JSON.stringify({ storeName, lastName }));
+    } else {
+        localStorage.removeItem('formData');
+    }
+}
+
 export async function loadInitialData() {
     try {
         const [storesResponse, categoriesResponse] = await Promise.all([
-            fetch('stores.json'), // Убедитесь, что путь к файлу правильный
+            fetch('stores.json'),
             fetch('categories.json')
         ]);
-        stores = await storesResponse.json(); // Загружаем данные в глобальную переменную
+
+        if (!storesResponse.ok || !categoriesResponse.ok) {
+            throw new Error("Ошибка загрузки данных.");
+        }
+
+        stores = await storesResponse.json();
         categories = await categoriesResponse.json();
 
-        console.log("Stores загружены:", stores); // Лог для отладки
+        console.log("Stores загружены:", stores);
         console.log("Categories загружены:", categories);
 
-        // Заполнение выпадающего списка магазинов
         const storeSelect = document.getElementById('storeName');
         Object.keys(stores).forEach(store => {
             const option = document.createElement('option');
@@ -24,7 +37,6 @@ export async function loadInitialData() {
             storeSelect.appendChild(option);
         });
 
-        // Восстановление данных из localStorage
         loadFormData();
     } catch (error) {
         console.error('Ошибка при загрузке данных:', error.message);
@@ -32,14 +44,18 @@ export async function loadInitialData() {
     }
 }
 
-// Рендеринг категорий для выбранного магазина
 export function renderItems(storeName) {
     const itemsContainer = document.getElementById('itemsContainer');
-    itemsContainer.innerHTML = ''; // Очищаем контейнер перед рендерингом
 
-    const storeCategories = stores[storeName] || []; // Получаем категории для точки или пустой массив
+    while (itemsContainer.firstChild) {
+        itemsContainer.firstChild.remove();
+    }
+
+    const storeCategories = stores[storeName] || [];
 
     storeCategories.forEach(category => {
+        if (!Array.isArray(category.items)) return;
+
         const categoryDiv = document.createElement('details');
         categoryDiv.innerHTML = `
             <summary>${category.name}</summary>
@@ -57,29 +73,27 @@ export function renderItems(storeName) {
     });
 }
 
-// Восстановление данных из localStorage
 function loadFormData() {
     const storedData = JSON.parse(localStorage.getItem('formData'));
-
     if (storedData) {
         document.getElementById('storeName').value = storedData.storeName;
         document.getElementById('lastName').value = storedData.lastName;
 
         if (storedData.storeName) {
-            renderItems(storedData.storeName); // Рендерим товары для сохраненной точки
+            renderItems(storedData.storeName);
         }
     }
 }
 
-// Обработчик изменения торговой точки
 document.getElementById('storeName').addEventListener('change', function () {
     const selectedStore = this.value;
     if (selectedStore) {
-        renderItems(selectedStore); // Рендерим товары для выбранной точки
+        renderItems(selectedStore);
+        saveFormData();
     } else {
-        document.getElementById('itemsContainer').innerHTML = ''; // Очищаем контейнер, если ничего не выбрано
+        document.getElementById('itemsContainer').innerHTML = '';
+        saveFormData();
     }
 });
 
-// Инициализация страницы
-window.onload = loadInitialData;
+document.addEventListener('DOMContentLoaded', loadInitialData);
