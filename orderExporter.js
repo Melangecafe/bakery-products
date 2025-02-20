@@ -11,12 +11,14 @@ export function generateOrderData(formData) {
     const quantities = formData.getAll('quantity[]');
     const filteredItems = [];
 
+    // Фильтрация товаров с положительным количеством
     for (let i = 0; i < itemNames.length; i++) {
         if (quantities[i] && parseInt(quantities[i], 10) > 0) {
             filteredItems.push(`${itemNames[i]} - ${quantities[i]}`);
         }
     }
 
+    // Добавление списка товаров или сообщения о том, что товаров не выбрано
     if (filteredItems.length > 0) {
         orderData += `Выпечка:\n`;
         filteredItems.forEach(item => {
@@ -41,11 +43,12 @@ export function submitForm() {
 
     const orderData = generateOrderData(formData);
 
+    // Если товаров не выбрано, добавляем соответствующее сообщение
     if (!orderData.includes("Выпечка:")) {
-        alert("Ошибка: Вы не выбрали ни одного товара.");
-        return;
+        alert("Внимание: Вы не выбрали ни одного товара.");
     }
 
+    // Сохраняем данные в файл
     const storeName = formData.get('storeName').replace(/\s+/g, '_');
     const date = new Date().toISOString().slice(0, 10);
     const fileName = `${storeName}_${date}.txt`;
