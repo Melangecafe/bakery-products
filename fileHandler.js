@@ -76,7 +76,9 @@ export function processUploadedFile() {
 
         renderItems(selectedStore); // Перерисовываем интерфейс
         showSuccessMessage();
-        resetFileUpload();
+
+        // Сохраняем данные в localStorage
+        saveFormData();
     };
 
     reader.onerror = function () {
