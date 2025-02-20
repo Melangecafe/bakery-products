@@ -2,13 +2,13 @@ import { validateForm, validateOrder } from './formValidator.js';
 import { generateOrderData, clearFormData } from './orderExporter.js';
 
 // Экспорт функции для отправки данных в WhatsApp
-export function shareTextViaWhatsApp() {
+function shareTextViaWhatsApp() {
     console.log("Кнопка 'Поделиться в WhatsApp' нажата");
 
     const form = document.getElementById('orderForm');
     const formData = new FormData(form);
 
-    if (!validateForm() || !validateOrder(formData)) {
+    if (!validateForm()) {
         showError("Ошибка: Пожалуйста, заполните форму корректно.");
         return;
     }
