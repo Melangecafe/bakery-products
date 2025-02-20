@@ -1,3 +1,5 @@
+// formValidator.js
+
 export function validateForm() {
     const storeNameSelect = document.getElementById('storeName');
     const lastNameInput = document.getElementById('lastName');
