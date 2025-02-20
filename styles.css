@@ -4,70 +4,51 @@ body {
     margin: 0;
     padding: 20px;
     line-height: 1.6;
-
-    /* Фоновое изображение */
     background-image: url('5c602a2a-5050-4869-98b6-8b1490d9983e.png');
-    background-size: cover; /* Масштабируем изображение, чтобы оно покрывало весь экран */
-    background-position: center; /* Центрируем изображение */
-    background-repeat: no-repeat; /* Запрещаем повторение */
-    background-attachment: fixed; /* Изображение фиксируется при прокрутке (опционально) */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f4f4f4;
 }
 
-/* Для очень маленьких экранов (мобильные устройства) */
 @media (max-width: 768px) {
     body {
-        background-size: contain; /* Изображение масштабируется до размера экрана без обрезания */
+        background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        background-attachment: scroll; /* Если экран маленький, изображение будет прокручиваться вместе с контентом */
-    }
-}
-
-/* Для экранов среднего размера (планшеты) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    body {
-        background-size: cover; /* Возвращаемся к масштабированию для планшетов */
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-}
-
-/* Для больших экранов (компьютеры) */
-@media (min-width: 1025px) {
-    body {
-        background-size: cover; /* Масштабируем изображение для больших экранов */
-        background-position: center;
-        background-repeat: no-repeat;
+        background-attachment: scroll;
+        padding: 10px;
     }
 }
 
 h1 {
     text-align: center;
-    font-size: 2rem; /* Базовый размер заголовка */
+    font-size: 2rem;
 }
 
 form {
-    background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 100%; /* Убедимся, что форма занимает всю доступную ширину */
+    max-width: 100%;
     margin: 0 auto;
 }
 
 label {
     display: block;
     margin-bottom: 10px;
-    font-size: 1rem; /* Размер шрифта для меток */
+    font-size: 1rem;
 }
 
 input, select, textarea {
-    width: 100%; /* Элементы формы занимают всю доступную ширину */
+    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 1rem; /* Размер шрифта для полей ввода */
+    font-size: 1rem;
 }
 
 button {
@@ -75,13 +56,13 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem; /* Размер шрифта для кнопок */
+    font-size: 1rem;
 }
 
 .center-button {
     display: block;
     margin: 20px auto;
-    width: 100%; /* Кнопки занимают всю ширину на мобильных устройствах */
+    width: 100%;
 }
 
 .item-row {
@@ -89,28 +70,28 @@ button {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+    flex-wrap: wrap;
 }
 
 .item-row span {
-    font-size: 1rem; /* Размер шрифта для названий товаров */
-    flex-basis: 100%; /* На мобильных устройствах название товара будет занимать всю строку */
+    font-size: 1rem;
+    flex-basis: 100%;
     margin-bottom: 5px;
 }
 
 .item-row input[type="number"] {
-    width: 100%; /* Поле количества занимает всю ширину */
+    width: 100%;
     margin-top: 5px;
 }
 
 .share-buttons {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Разрешаем перенос кнопок на новую строку */
+    flex-wrap: wrap;
 }
 
 .share-buttons button {
-    width: calc(50% - 10px); /* Кнопки занимают половину ширины с отступами */
+    width: calc(50% - 10px);
     margin-bottom: 10px;
 }
 
@@ -134,8 +115,11 @@ button {
 
 .error-message {
     color: red;
+    background-color: #ffecec;
+    padding: 10px;
+    border-radius: 5px;
     margin-bottom: 10px;
-    font-size: 0.9rem; /* Размер шрифта для сообщений об ошибках */
+    font-size: 0.9rem;
 }
 
 details {
@@ -145,52 +129,54 @@ details {
 summary {
     font-weight: bold;
     cursor: pointer;
-    font-size: 1rem; /* Размер шрифта для категорий */
+    font-size: 1rem;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Медиа-запросы для мобильных устройств */
-@media (max-width: 768px) {
-    body {
-        padding: 10px; /* Уменьшаем отступы для мобильных */
-    }
+summary:hover {
+    background-color: #f9f9f9;
+}
 
+@media (max-width: 768px) {
     h1 {
-        font-size: 1.5rem; /* Уменьшаем размер заголовка */
+        font-size: 1.5rem;
     }
 
     form {
-        padding: 15px; /* Уменьшаем внутренние отступы формы */
+        padding: 15px;
     }
 
     label {
-        font-size: 0.9rem; /* Уменьшаем размер шрифта для меток */
+        font-size: 0.9rem;
     }
 
     input, select, textarea {
-        font-size: 0.9rem; /* Уменьшаем размер шрифта для полей ввода */
+        font-size: 0.8rem;
+        padding: 8px;
     }
 
     .center-button {
-        width: 100%; /* Кнопки становятся полноразмерными */
+        width: 100%;
     }
 
     .share-buttons button {
-        width: 100%; /* Каждая кнопка занимает всю ширину */
+        width: 100%;
         margin-right: 0;
         margin-bottom: 10px;
     }
 
     .item-row {
-        flex-direction: column; /* Название товара и поле количества располагаются вертикально */
+        flex-direction: column;
     }
 
     .item-row span {
-        flex-basis: 100%; /* Название товара занимает всю строку */
+        flex-basis: 100%;
         margin-bottom: 5px;
     }
 
     .item-row input[type="number"] {
-        width: 100%; /* Поле количества занимает всю строку */
+        width: 100%;
         margin-top: 5px;
     }
 }
