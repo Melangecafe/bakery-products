@@ -1,5 +1,3 @@
-// formValidator.js
-
 export function validateForm() {
     const storeNameSelect = document.getElementById('storeName');
     const lastNameInput = document.getElementById('lastName');
@@ -27,19 +25,16 @@ export function validateOrder(formData) {
     const itemNames = formData.getAll('itemName[]');
     const quantities = formData.getAll('quantity[]');
 
-    if (itemNames.length === 0 || quantities.length === 0) {
-        showError("Ошибка: Список товаров пуст.");
-        return false;
-    }
-
+    // Проверяем, что количество товаров соответствует формату (число)
     for (let i = 0; i < quantities.length; i++) {
         const quantity = parseInt(quantities[i], 10);
-        if (isNaN(quantity) || quantity <= 0) {
-            showError(`Ошибка: Укажите положительное количество для товара "${itemNames[i]}".`);
+        if (isNaN(quantity)) {
+            showError(`Ошибка: Для товара "${itemNames[i]}" указано некорректное количество.`);
             return false;
         }
     }
 
+    // Если все проверки пройдены, возвращаем true
     return true;
 }
 
