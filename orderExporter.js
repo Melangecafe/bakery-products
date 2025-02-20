@@ -11,14 +11,12 @@ export function generateOrderData(formData) {
     const quantities = formData.getAll('quantity[]');
     const filteredItems = [];
 
-    // Фильтрация товаров с положительным количеством
     for (let i = 0; i < itemNames.length; i++) {
         if (quantities[i] && parseInt(quantities[i], 10) > 0) {
             filteredItems.push(`${itemNames[i]} - ${quantities[i]}`);
         }
     }
 
-    // Добавление списка товаров или сообщения о том, что товаров не выбрано
     if (filteredItems.length > 0) {
         orderData += `Выпечка:\n`;
         filteredItems.forEach(item => {
@@ -43,7 +41,6 @@ export function submitForm() {
 
     const orderData = generateOrderData(formData);
 
-    // Если товаров не выбрано, добавляем соответствующее сообщение
     if (!orderData.includes("Выпечка:")) {
         alert("Внимание: Вы не выбрали ни одного товара.");
     }
@@ -63,6 +60,7 @@ export function submitForm() {
     URL.revokeObjectURL(url);
 
     clearFormData();
+    localStorage.removeItem('formData'); // Удаляем данные из localStorage после сохранения
     alert("Заявка успешно сохранена!");
 }
 
