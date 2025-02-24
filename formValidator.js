@@ -4,6 +4,7 @@ export function validateForm() {
 
     let isValid = true;
 
+    // Проверка выбора торговой точки
     if (storeNameSelect.value === "") {
         document.getElementById('storeNameError').style.display = 'block';
         isValid = false;
@@ -11,6 +12,7 @@ export function validateForm() {
         document.getElementById('storeNameError').style.display = 'none';
     }
 
+    // Проверка ввода фамилии сотрудника
     if (lastNameInput.value.trim() === "") {
         document.getElementById('lastNameError').style.display = 'block';
         isValid = false;
@@ -25,16 +27,23 @@ export function validateOrder(formData) {
     const itemNames = formData.getAll('itemName[]');
     const quantities = formData.getAll('quantity[]');
 
-    // Проверяем, что количество товаров соответствует формату (число)
-    for (let i = 0; i < quantities.length; i++) {
+    for (let i = 0; i < itemNames.length; i++) {
+        const itemName = itemNames[i];
         const quantity = parseInt(quantities[i], 10);
+
+        // Проверка, что количество является числом
         if (isNaN(quantity)) {
-            showError(`Ошибка: Для товара "${itemNames[i]}" указано некорректное количество.`);
+            showError(`Ошибка: Для товара "${itemName}" указано некорректное количество.`);
+            return false;
+        }
+
+        // Проверка кратности 4 для товаров с "Кратное 4шт"
+        if (itemName.includes("Кратное 4шт") && quantity > 0 && quantity % 4 !== 0) {
+            showError(`Ошибка: Количество для товара "${itemName}" должно быть кратно 4.`);
             return false;
         }
     }
 
-    // Если все проверки пройдены, возвращаем true
     return true;
 }
 
