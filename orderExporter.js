@@ -35,7 +35,7 @@ export function submitForm() {
     const formData = new FormData(form);
 
     if (!validateForm() || !validateOrder(formData)) {
-        alert("Ошибка: Пожалуйста, заполните форму корректно.");
+        alert("Ошибка: Пожалуйста, исправьте форму.");
         return;
     }
 
