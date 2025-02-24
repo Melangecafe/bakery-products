@@ -31,19 +31,21 @@ export function validateOrder(formData) {
         const itemName = itemNames[i];
         const quantity = parseInt(quantities[i], 10);
 
-        // Проверка, что количество является числом
-        if (isNaN(quantity)) {
-            showError(`Ошибка: Для товара "${itemName}" указано некорректное количество.`);
-            return false;
-        }
-
-        // Проверка кратности 4 для товаров с "Кратное 4шт"
-        if (itemName.includes("Кратное 4шт") && quantity > 0 && quantity % 4 !== 0) {
-            showError(`Ошибка: Количество для товара "${itemName}" должно быть кратно 4.`);
+        // Проверяем, что количество — число
+        if (!isNaN(quantity) && quantity > 0) {
+            // Если товар содержит "Кратное 4шт", проверяем кратность
+            if (itemName.includes("Кратное 4шт") && quantity % 4 !== 0) {
+                showError(`Ошибка: Количество для товара "${itemName}" должно быть кратно 4.`);
+                return false;
+            }
+        } else if (!isNaN(quantity) && quantity < 0) {
+            // Запрещаем отрицательные значения
+            showError(`Ошибка: Количество для товара "${itemName}" не может быть отрицательным.`);
             return false;
         }
     }
 
+    // Разрешаем отправку формы, даже если выбран только один товар
     return true;
 }
 
