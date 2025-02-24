@@ -12,8 +12,9 @@ export function generateOrderData(formData) {
     const filteredItems = [];
 
     for (let i = 0; i < itemNames.length; i++) {
-        if (quantities[i] && parseInt(quantities[i], 10) > 0) {
-            filteredItems.push(`${itemNames[i]} - ${quantities[i]}`);
+        const quantity = parseInt(quantities[i], 10);
+        if (quantity > 0) {
+            filteredItems.push(`${itemNames[i]} - ${quantity}`);
         }
     }
 
