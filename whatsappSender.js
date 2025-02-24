@@ -16,7 +16,7 @@ function shareTextViaWhatsApp() {
     const formData = new FormData(form);
 
     if (!validateForm() || !validateOrder(formData)) {
-        showError("Ошибка: Пожалуйста, заполните форму корректно.");
+        showError("Ошибка: Пожалуйста, исправьте форму.");
         return;
     }
 
@@ -26,7 +26,7 @@ function shareTextViaWhatsApp() {
 
     window.open(whatsappLink, '_blank');
 
-    // Очищаем данные только после отправки
+    // Очищаем данные после отправки
     clearFormData();
     localStorage.removeItem('formData'); // Удаляем данные из localStorage
     showSuccessMessage();
