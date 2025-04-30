@@ -31,11 +31,16 @@ export function validateOrder(formData) {
         const itemName = itemNames[i];
         const quantity = parseInt(quantities[i], 10);
 
+        // Если количество равно 0 или пустое, пропускаем проверку
+        if (isNaN(quantity) || quantity === 0) {
+            continue;
+        }
+
         // Извлекаем минимальное количество из описания товара
         const minQuantityMatch = itemName.match(/минимум для точки (\d+)/);
         const minQuantity = minQuantityMatch ? parseInt(minQuantityMatch[1], 10) : 0;
 
-        if (isNaN(quantity) || quantity < minQuantity) {
+        if (quantity < minQuantity) {
             alert(`Ошибка: Для товара "${itemName}" минимальное количество — ${minQuantity} шт.`);
             return false;
         }
