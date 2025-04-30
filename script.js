@@ -1,5 +1,4 @@
 export let stores = {};
-export let categories = {};
 
 // Сохранение данных формы в localStorage
 function saveFormData() {
@@ -53,9 +52,7 @@ function loadFormData() {
 // Загрузка начальных данных
 export async function loadInitialData() {
     try {
-        const [storesResponse] = await Promise.all([
-            fetch('stores.json')
-        ]);
+        const storesResponse = await fetch('stores.json');
 
         if (!storesResponse.ok) {
             throw new Error("Ошибка загрузки данных.");
