@@ -42,13 +42,9 @@ export function validateOrder(formData) {
             // Запрещаем отрицательные значения
             showError(`Ошибка: Количество для товара "${itemName}" не может быть отрицательным.`);
             return false;
-        } else {
-            showError(`Ошибка: Количество для товара "${itemName}" должно быть больше 0.`);
-            return false;
         }
     }
 
-    // Разрешаем отправку формы, даже если выбран только один товар
     return true;
 }
 
@@ -56,9 +52,4 @@ function showError(message) {
     const errorContainer = document.getElementById('orderError');
     errorContainer.textContent = message;
     errorContainer.style.display = 'block';
-}
-
-function clearError() {
-    const errorContainer = document.getElementById('orderError');
-    errorContainer.style.display = 'none';
 }
