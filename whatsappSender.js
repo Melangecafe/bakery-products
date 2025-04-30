@@ -22,7 +22,7 @@ function shareTextViaWhatsApp() {
 
     // Валидация заказа
     if (!validateOrder(formData)) {
-        return; // Если валидация заказа не прошла, прекращаем выполнение
+        return;
     }
 
     // Генерация данных заказа
