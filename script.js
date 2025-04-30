@@ -102,7 +102,7 @@ export function renderItems(storeName) {
                         <div class="item-row">
                             <span>${item}</span>
                             <input type="hidden" name="itemName[]" value="${item}">
-                            <input type="number" placeholder="Количество" name="quantity[]" min="${minQuantity}" max="1000">
+                            <input type="number" placeholder="Количество" name="quantity[]" min="0" max="1000">
                         </div>
                     `;
                 }).join('')}
