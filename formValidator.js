@@ -31,15 +31,14 @@ export function validateOrder(formData) {
         const itemName = itemNames[i];
         const quantity = parseInt(quantities[i], 10);
 
-        // Проверяем, что количество — число
-        if (!isNaN(quantity) && quantity > 0) {
-            // Если товар содержит "Кратное 4шт", проверяем кратность
-            if (itemName.includes("Кратное 4шт") && quantity % 4 !== 0) {
-                showError(`Ошибка: Количество для товара "${itemName}" должно быть кратно 4.`);
-                return false;
-            }
-        } else if (!isNaN(quantity) && quantity < 0) {
-            // Запрещаем отрицательные значения
+        // Проверяем, что количество — число и больше 0
+        if (isNaN(quantity) || quantity <= 0) {
+            showError(`Ошибка: Количество для товара "${itemName}" должно быть больше 0.`);
+            return false;
+        }
+
+        // Запрещаем отрицательные значения
+        if (quantity < 0) {
             showError(`Ошибка: Количество для товара "${itemName}" не может быть отрицательным.`);
             return false;
         }
@@ -52,4 +51,9 @@ function showError(message) {
     const errorContainer = document.getElementById('orderError');
     errorContainer.textContent = message;
     errorContainer.style.display = 'block';
+}
+
+function clearError() {
+    const errorContainer = document.getElementById('orderError');
+    errorContainer.style.display = 'none';
 }
