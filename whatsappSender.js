@@ -20,11 +20,6 @@ function shareTextViaWhatsApp() {
         return;
     }
 
-    // Валидация заказа
-    if (!validateOrder(formData)) {
-        return;
-    }
-
     // Генерация данных заказа
     const orderData = generateOrderData(formData);
 
