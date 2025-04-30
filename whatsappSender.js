@@ -1,3 +1,5 @@
+import { validateForm, validateOrder } from './formValidator.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const whatsappButton = document.querySelector('.green-button');
 
@@ -12,9 +14,15 @@ function shareTextViaWhatsApp() {
     const form = document.getElementById('orderForm');
     const formData = new FormData(form);
 
-    if (!validateForm() || !validateOrder(formData)) {
-        showError("Ошибка: Пожалуйста, исправьте форму.");
+    // Валидация формы
+    if (!validateForm()) {
+        showError("Ошибка: Пожалуйста, заполните форму корректно.");
         return;
+    }
+
+    // Валидация заказа
+    if (!validateOrder(formData)) {
+        return; // Если валидация заказа не прошла, прекращаем выполнение
     }
 
     // Генерация данных заказа
