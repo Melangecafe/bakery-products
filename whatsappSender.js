@@ -1,4 +1,4 @@
-import { validateForm, validateOrder } from './formValidator.js';
+import { validateForm } from './formValidator.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const whatsappButton = document.querySelector('.green-button');
@@ -23,20 +23,22 @@ function shareTextViaWhatsApp() {
     // Генерация данных заказа
     const orderData = generateOrderData(formData);
 
-    // Разбиение данных на группы товаров
-    const groupedOrderData = groupItemsByCategory(orderData);
-
     // Формирование текста для WhatsApp
     let whatsappMessage = `*Заказ для точки: ${formData.get('storeName')}*\n`;
     whatsappMessage += `Сотрудник: ${formData.get('lastName')}\n\n`;
 
+    // Разбиение данных на группы (бывшие категории)
+    const groupedOrderData = groupItemsByCategory(orderData);
+
     groupedOrderData.forEach(group => {
-        whatsappMessage += `*${group.category}*\n`;
         group.items.forEach(item => {
             whatsappMessage += `- ${item.name}: *${item.quantity} шт.*\n`;
         });
-        whatsappMessage += '\n';
+        whatsappMessage += '\n'; // Пустая строка между группами
     });
+
+    // Удаляем последнюю пустую строку
+    whatsappMessage = whatsappMessage.trim();
 
     // Кодирование сообщения для URL
     const encodedMessage = encodeURIComponent(whatsappMessage);
@@ -92,7 +94,6 @@ function groupItemsByCategory(orderData) {
     });
 
     return Object.keys(groupedData).map(category => ({
-        category: category,
         items: groupedData[category]
     }));
 }
