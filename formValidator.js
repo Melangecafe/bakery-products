@@ -1,4 +1,4 @@
-export function validateForm() {
+export function validateForm(formData) {
     const storeNameSelect = document.getElementById('storeName');
     const lastNameInput = document.getElementById('lastName');
 
@@ -24,36 +24,22 @@ export function validateForm() {
 }
 
 export function validateOrder(formData) {
-    const itemNames = formData.getAll('itemName[]');
     const quantities = formData.getAll('quantity[]');
+    const itemNames = formData.getAll('itemName[]');
 
-    for (let i = 0; i < itemNames.length; i++) {
+    for (let i = 0; i < quantities.length; i++) {
         const itemName = itemNames[i];
         const quantity = parseInt(quantities[i], 10);
 
-        // Проверяем, что количество — число и больше 0
-        if (isNaN(quantity) || quantity <= 0) {
-            showError(`Ошибка: Количество для товара "${itemName}" должно быть больше 0.`);
-            return false;
-        }
+        // Извлекаем минимальное количество из описания товара
+        const minQuantityMatch = itemName.match(/минимум для точки (\d+)/);
+        const minQuantity = minQuantityMatch ? parseInt(minQuantityMatch[1], 10) : 0;
 
-        // Запрещаем отрицательные значения
-        if (quantity < 0) {
-            showError(`Ошибка: Количество для товара "${itemName}" не может быть отрицательным.`);
+        if (isNaN(quantity) || quantity < minQuantity) {
+            alert(`Ошибка: Для товара "${itemName}" минимальное количество — ${minQuantity} шт.`);
             return false;
         }
     }
 
     return true;
-}
-
-function showError(message) {
-    const errorContainer = document.getElementById('orderError');
-    errorContainer.textContent = message;
-    errorContainer.style.display = 'block';
-}
-
-function clearError() {
-    const errorContainer = document.getElementById('orderError');
-    errorContainer.style.display = 'none';
 }
