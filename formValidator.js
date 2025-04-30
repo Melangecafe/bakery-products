@@ -42,6 +42,9 @@ export function validateOrder(formData) {
             // Запрещаем отрицательные значения
             showError(`Ошибка: Количество для товара "${itemName}" не может быть отрицательным.`);
             return false;
+        } else {
+            showError(`Ошибка: Количество для товара "${itemName}" должно быть больше 0.`);
+            return false;
         }
     }
 
