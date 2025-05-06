@@ -35,7 +35,7 @@ function shareTextViaWhatsApp() {
 
     groupedOrderData.forEach(group => {
         group.items.forEach(item => {
-            whatsappMessage += `- ${item.name}: *${item.quantity} шт.*\n`;
+            whatsappMessage += `- ${item.name}: *${item.quantity} порц.*\n`;
         });
         whatsappMessage += '\n'; // Пустая строка между группами
     });
