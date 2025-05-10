@@ -27,13 +27,13 @@ function shareTextViaWhatsApp() {
     let whatsappMessage = `*Заказ для точки: ${formData.get('storeName')}*\n`;
     whatsappMessage += `Сотрудник: ${formData.get('lastName')}\n\n`;
 
-    // Добавляем строку "Выпечка"
-    whatsappMessage += `Выпечка\n`;
-
     // Разбиение данных на группы (бывшие категории)
     const groupedOrderData = groupItemsByCategory(orderData);
 
     groupedOrderData.forEach(group => {
+        // Добавляем название категории
+        whatsappMessage += `*${group.category}*\n`;
+
         group.items.forEach(item => {
             whatsappMessage += `- ${item.name}: *${item.quantity} порц.*\n`;
         });
@@ -97,6 +97,7 @@ function groupItemsByCategory(orderData) {
     });
 
     return Object.keys(groupedData).map(category => ({
+        category, // Добавляем имя категории
         items: groupedData[category]
     }));
 }
