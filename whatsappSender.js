@@ -24,7 +24,7 @@ function shareTextViaWhatsApp() {
     const orderData = generateOrderData(formData);
 
     // Формирование текста для WhatsApp
-    let whatsappMessage = `*Заказ для точки: ${formData.get('storeName')}*\n`;
+    let whatsappMessage = `*Торговая точка: ${formData.get('storeName')}*\n`;
     whatsappMessage += `Сотрудник: ${formData.get('lastName')}\n\n`;
 
     // Добавляем строку "Выпечка"
